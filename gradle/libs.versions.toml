@@ -1,11 +1,14 @@
 [versions]
 tg-bot = "7.6.1"
 ksp = "2.1.0-1.0.29"
+jackson = "2.18.2"
+redis = "3.40.1"
 
 kotlin = "2.1.0"
 
 [libraries]
-
+redisson = { module = "org.redisson:redisson", version.ref = "redis" }
+jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
 
 [plugins]
 telegram-bot = { id = "eu.vendeli.telegram-bot", version.ref = "tg-bot" }

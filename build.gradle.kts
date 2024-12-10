@@ -20,7 +20,8 @@ repositories {
 }
 
 dependencies {
-    // ...
+    implementation(libs.redisson)
+    implementation(libs.jackson.kotlin)
 }
 
 kotlin {

@@ -1,11 +1,23 @@
 package com.example.blank
 
 import eu.vendeli.tgbot.TelegramBot
+import eu.vendeli.tgbot.api.botactions.getMe
+import eu.vendeli.tgbot.types.internal.getOrNull
+import kotlinx.coroutines.runBlocking
 
-suspend fun main() {
-    val bot = TelegramBot("BOT_TOKEN")
-    // And that'd all write your own bot from blank.
-    // Create new controllers in the controller folder or expand old one
+object TgBotApplication {
+    private val bot = TelegramBot("BOT_TOKEN")
 
-    bot.handleUpdates()
+    val CUR_BOT_ID: Long by lazy {
+        runBlocking {
+            getMe().sendAsync(bot).getOrNull()!!.id
+        }
+    }
+
+    @JvmStatic
+    suspend fun main(args: Array<String>) {
+        println("Current bot id: $CUR_BOT_ID")
+
+        bot.handleUpdates()
+    }
 }
