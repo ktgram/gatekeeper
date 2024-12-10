@@ -1,4 +1,4 @@
-# Telegram-bot templates
+# Gatekeeper bot
 
 This repository contains simple different example of how to use
 the [telegram-bot](https://github.com/vendelieu/telegram-bot) library to make gatekeeper bot.
