@@ -1,10 +1,11 @@
 package com.example.blank.controller
 
 import com.example.blank.TgBotApplication.CUR_BOT_ID
-import eu.vendeli.tgbot.generated.get
-import eu.vendeli.tgbot.generated.set
 import com.example.blank.types.ChatUser
-import com.example.blank.utils.*
+import com.example.blank.utils.RESTRICTED_PERMISSIONS
+import com.example.blank.utils.localCachedMap
+import com.example.blank.utils.sendAnd
+import com.example.blank.utils.silent
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import eu.vendeli.tgbot.TelegramBot
 import eu.vendeli.tgbot.annotations.CommandHandler
@@ -15,6 +16,8 @@ import eu.vendeli.tgbot.api.chat.banChatMember
 import eu.vendeli.tgbot.api.chat.restrictChatMember
 import eu.vendeli.tgbot.api.message.deleteMessage
 import eu.vendeli.tgbot.api.message.message
+import eu.vendeli.tgbot.generated.get
+import eu.vendeli.tgbot.generated.set
 import eu.vendeli.tgbot.types.User
 import eu.vendeli.tgbot.types.chat.Chat
 import eu.vendeli.tgbot.types.internal.*
@@ -50,6 +53,18 @@ class GateHandler {
 
     private fun getGateNum() = Random(seed = Instant.now().epochSecond).nextInt(1..3)
 
+    /**
+     * This function is used to catch messages in the group.
+     *
+     * When user joins the group, it will send a message with a button to prove that user is not a bot.
+     * If user clicks the button, then the message with the button will be deleted and user will be able to write in the group.
+     * Otherwise, the message with the button will be deleted after 2 minutes and user will be restricted for 1h.
+     *
+     * Also, this function is used to catch links in the group. If user is a newcomer (has joined the group less than 24 hours ago), then the link will be deleted.
+     *
+     * @param update the message update
+     * @param bot the bot instance
+     */
     @UpdateHandler([UpdateType.MESSAGE])
     suspend fun catchMessages(
         update: MessageUpdate,
@@ -122,6 +137,12 @@ class GateHandler {
         }
     }
 
+    /**
+     * Bans users who spam reactions in channels where the 'gate is still closed'.
+     *
+     * @param update the reaction update
+     * @param bot the bot instance
+     */
     @UpdateHandler([UpdateType.MESSAGE_REACTION]) // ban reaction spammers
     suspend fun reactionsHandler(
         update: MessageReactionUpdate,
@@ -131,6 +152,17 @@ class GateHandler {
         if (gated[anchor] != null) bot.ban(anchor.userId, anchor.chatId)
     }
 
+    /**
+     * Checks if the user's gate number is correct.
+     *
+     * If the number is correct, then it sends a welcome message and deletes the gate message.
+     * If the number is incorrect, then it sends a message saying "Nop :p".
+     *
+     * @param gate the gate number
+     * @param upd the callback query update
+     * @param user the user instance
+     * @param bot the bot instance
+     */
     @CommandHandler.CallbackQuery(["checkGate"])
     suspend fun check(
         gate: Int,
