@@ -31,6 +31,7 @@ import kotlin.random.Random
 import kotlin.random.nextInt
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.seconds
+import kotlin.time.toJavaDuration
 
 class GateHandler {
     private val redis = Redisson.create().apply {
@@ -38,7 +39,9 @@ class GateHandler {
     }
 
     private val newcomer = redis.getSetCache<ChatUser>("gato_newcomer")
-    private val gated: RLocalCachedMap<ChatUser, Int> = redis.localCachedMap<ChatUser, Int>("gated")
+    private val gated: RLocalCachedMap<ChatUser, Int> = redis.localCachedMap<ChatUser, Int>("gated") {
+        timeToLive(125.seconds.toJavaDuration())
+    }
 
 
     private val keeperCoCtx = object : CoroutineScope {
