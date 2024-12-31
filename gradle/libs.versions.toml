@@ -1,5 +1,5 @@
 [versions]
-tg-bot = "7.6.2"
+tg-bot = "7.7.1"
 ksp = "2.1.0-1.0.29"
 jackson = "2.18.2"
 redis = "3.41.0"
