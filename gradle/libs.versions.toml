@@ -1,7 +1,7 @@
 [versions]
 tg-bot = "7.9.0"
 ksp = "2.1.10-1.0.31"
-jackson = "2.18.2"
+jackson = "2.18.3"
 redis = "3.45.0"
 
 kotlin = "2.1.10"
