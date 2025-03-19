@@ -2,7 +2,7 @@ package com.example.blank
 
 import eu.vendeli.tgbot.TelegramBot
 import eu.vendeli.tgbot.api.botactions.getMe
-import eu.vendeli.tgbot.types.internal.getOrNull
+import eu.vendeli.tgbot.types.component.getOrNull
 import kotlinx.coroutines.runBlocking
 
 object TgBotApplication {
@@ -10,7 +10,7 @@ object TgBotApplication {
 
     val CUR_BOT_ID: Long by lazy {
         runBlocking {
-            getMe().sendAsync(bot).getOrNull()!!.id
+            getMe().sendReturning(bot).getOrNull()!!.id
         }
     }
 

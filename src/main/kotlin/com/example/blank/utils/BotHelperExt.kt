@@ -5,9 +5,9 @@ import eu.vendeli.tgbot.interfaces.action.Action
 import eu.vendeli.tgbot.interfaces.action.TgAction
 import eu.vendeli.tgbot.interfaces.features.OptionsFeature
 import eu.vendeli.tgbot.types.chat.ChatPermissions
-import eu.vendeli.tgbot.types.internal.getOrNull
-import eu.vendeli.tgbot.types.internal.options.Options
-import eu.vendeli.tgbot.types.internal.options.OptionsCommon
+import eu.vendeli.tgbot.types.component.getOrNull
+import eu.vendeli.tgbot.types.options.Options
+import eu.vendeli.tgbot.types.options.OptionsCommon
 
 val RESTRICTED_PERMISSIONS = ChatPermissions(
     canSendMessages = false,

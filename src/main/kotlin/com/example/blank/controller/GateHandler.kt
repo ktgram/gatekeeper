@@ -20,7 +20,12 @@ import eu.vendeli.tgbot.generated.get
 import eu.vendeli.tgbot.generated.set
 import eu.vendeli.tgbot.types.User
 import eu.vendeli.tgbot.types.chat.Chat
-import eu.vendeli.tgbot.types.internal.*
+import eu.vendeli.tgbot.types.component.CallbackQueryUpdate
+import eu.vendeli.tgbot.types.component.MessageReactionUpdate
+import eu.vendeli.tgbot.types.component.MessageUpdate
+import eu.vendeli.tgbot.types.component.UpdateType
+import eu.vendeli.tgbot.types.component.getOrNull
+import eu.vendeli.tgbot.types.component.userOrNull
 import eu.vendeli.tgbot.types.msg.EntityType
 import kotlinx.coroutines.*
 import kotlinx.coroutines.future.asDeferred
@@ -93,7 +98,7 @@ class GateHandler {
                         "1\uFE0F⃣" callback "checkGate?gate=1"
                         "2\uFE0F⃣" callback "checkGate?gate=2"
                         "3\uFE0F⃣" callback "checkGate?gate=3"
-                    }.sendAsync(update.message.chat.id, bot)
+                    }.sendReturning(update.message.chat.id, bot)
                         .getOrNull()!!
 
                     val curChatUser = ChatUser(userId = user.id, chatId = update.message.chat.id)
