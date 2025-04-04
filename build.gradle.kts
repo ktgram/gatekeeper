@@ -12,7 +12,7 @@ plugins {
 group = "com.example.blank"
 version = "0.0.1"
 application {
-    mainClass.set("com.example.blank.TgBotApplicationKt")
+    mainClass.set("com.example.blank.TgBotApplication")
 }
 
 repositories {

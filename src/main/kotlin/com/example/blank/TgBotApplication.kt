@@ -15,7 +15,7 @@ object TgBotApplication {
     }
 
     @JvmStatic
-    suspend fun main(args: Array<String>) {
+    fun main(args: Array<String>) = runBlocking {
         println("Current bot id: $CUR_BOT_ID")
 
         bot.handleUpdates()
