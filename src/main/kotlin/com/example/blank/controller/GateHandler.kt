@@ -20,16 +20,10 @@ import eu.vendeli.tgbot.generated.get
 import eu.vendeli.tgbot.generated.set
 import eu.vendeli.tgbot.types.User
 import eu.vendeli.tgbot.types.chat.Chat
-import eu.vendeli.tgbot.types.component.CallbackQueryUpdate
-import eu.vendeli.tgbot.types.component.MessageReactionUpdate
-import eu.vendeli.tgbot.types.component.MessageUpdate
-import eu.vendeli.tgbot.types.component.UpdateType
-import eu.vendeli.tgbot.types.component.getOrNull
-import eu.vendeli.tgbot.types.component.userOrNull
+import eu.vendeli.tgbot.types.component.*
 import eu.vendeli.tgbot.types.msg.EntityType
 import kotlinx.coroutines.*
 import kotlinx.coroutines.future.asDeferred
-import kotlinx.datetime.Clock
 import org.redisson.Redisson
 import org.redisson.api.RLocalCachedMap
 import org.redisson.codec.JsonJacksonCodec
@@ -37,8 +31,10 @@ import java.time.Instant
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 import kotlin.random.nextInt
+import kotlin.time.Clock
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.seconds
+import kotlin.time.ExperimentalTime
 import kotlin.time.toJavaDuration
 
 class GateHandler {
@@ -213,6 +209,7 @@ class GateHandler {
         }.silent().send(chat, this)
     }
 
+    @OptIn(ExperimentalTime::class)
     suspend fun TelegramBot.gatedAction(user: User, chat: Chat) {
         message(
             "\uD83D\uDEA8 User #${user.id} restricted for an hour!"
@@ -225,6 +222,7 @@ class GateHandler {
         ).send(chat, this)
     }
 
+    @OptIn(ExperimentalTime::class)
     suspend fun TelegramBot.ban(userId: Long, chatId: Long) {
         banChatMember(userId).send(chatId, this)
         message(
