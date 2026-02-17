@@ -1,10 +1,10 @@
 [versions]
-tg-bot = "9.1.0"
-ksp = "2.3.4"
+tg-bot = "9.2.1"
+ksp = "2.3.6"
 jackson = "2.21.0"
-redis = "4.1.0"
+redis = "4.2.0"
 
-kotlin = "2.3.0"
+kotlin = "2.3.10"
 
 [libraries]
 redisson = { module = "org.redisson:redisson", version.ref = "redis" }
